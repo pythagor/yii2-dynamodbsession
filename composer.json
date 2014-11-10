@@ -1,0 +1,34 @@
+{
+    "name": "pythagor/yii2-dynamodbsession",
+    "description": "Amazon DynamoDB Session for Yii2",
+    "keywords": [
+        "yii2",
+        "session",
+        "amazon",
+        "DynamoDb"
+    ],
+    "homepage": "https://github.com/pythagor/yii2-dynamodbsession",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Andrei Chugunov",
+            "email": "admin@pythagor.com",
+            "homepage": "http://pythagor.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pythagor/yii2-dynamodbsession/issues?state=open",
+        "source": "https://github.com/pythagor/yii2-dynamodbsession"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "aws/aws-sdk-php": "2.7.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "pythagor\\dynamodbsession\\": ""
+        }
+    }
+}
