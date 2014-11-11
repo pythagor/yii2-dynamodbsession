@@ -18,7 +18,7 @@ class DynamoDbSession extends Session
     /**
      * @var DynamoDbClient
      */
-    private $dynamoDb;
+    public $dynamoDb;
 
     public $params;
 
@@ -58,6 +58,7 @@ class DynamoDbSession extends Session
         $this->dynamoDb = DynamoDbClient::factory([
             'region' => $this->params['region'],
             'credentials' => $credentials,
+            'base_url' => isset($this->params['base_url']) ? $this->params['base_url'] : '',
         ]);
 
         $this->tableName = $this->sessionTable;
@@ -79,7 +80,7 @@ class DynamoDbSession extends Session
         return $r['Item'];
     }
 
-    protected function getExipireTime()
+    protected function getExpireTime()
     {
         return time() + $this->getTimeout();
     }
@@ -120,7 +121,7 @@ class DynamoDbSession extends Session
             'Item' => array(
                 $this->idColumn => array('S' => $id),
                 $this->dataColumn => array('S' => $data),
-                $this->expireColumn => array('N' => $this->getExipireTime()),
+                $this->expireColumn => array('N' => $this->getExpireTime()),
             ),
         ));
 
@@ -135,7 +136,7 @@ class DynamoDbSession extends Session
      */
     public function destroySession($id)
     {
-        $r = $this->dynamoDb->deleteItem(array(
+        $this->dynamoDb->deleteItem(array(
             'TableName' => $this->tableName,
             'Key' => array(
                 'id' => array('S' => (string) $id),
@@ -200,7 +201,7 @@ class DynamoDbSession extends Session
                 'TableName' => $this->tableName,
                 'Item' => array(
                     $this->idColumn => array('S' => $newId),
-                    $this->expireColumn => array('N' => $this->getExipireTime()),
+                    $this->expireColumn => array('N' => $this->getExpireTime()),
                 ),
             ));
         }
